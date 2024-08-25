@@ -8,7 +8,6 @@ import java.util.Scanner;
 import dao.PessoaDAO;
 import dao.PessoaDAOFile;
 import dao.PessoaDAOPGSQL;
-import dao.PessoaDAOSerFile;
 import model.Pessoa;
 
 public class Main {
@@ -92,25 +91,21 @@ public class Main {
   private static void inicializarDAO() throws IOException, ClassNotFoundException, SQLException {
     System.out.println("Digite o número da opção desejada:");
     System.out.println("1 - Usar arquivo de dados padrão 'pessoas.ser'");
-    System.out.println("2 - Informar arquivo caminho do arquivo de dados (.ser,.csv)");
+    System.out.println("2 - Informar arquivo caminho do arquivo de dados (.ser / .csv)");
     System.out.println("3 - Usar Banco de Dados Local(PostgreSQL)");
     System.out.println("0 - Sair");
     System.out.print("-> ");
     int option = obterOpcao();
     switch (option) {
       case 1: {
-        pessoas = new PessoaDAOSerFile("pessoas.ser");
+        pessoas = new PessoaDAOFile("pessoas.ser");
         System.out.println("\nUsando 'pessoas.ser' como arquivo de dados");
         break;
       }
       case 2: {
         System.out.print("\nDigite o caminho do arquivo de dados: ");
         String path = sc.nextLine();
-        if (path.endsWith(".ser")) {
-          pessoas = new PessoaDAOSerFile(path);
-        } else {
-          pessoas = new PessoaDAOFile(path);
-        }
+        pessoas = new PessoaDAOFile(path);
         System.out.println("\nUsando '" + path + "' como arquivo de dados");
         break;
       }
